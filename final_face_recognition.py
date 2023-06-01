@@ -9,7 +9,7 @@ import mysql.connector
 
 
 def new_function():
-    return 'new'
+    return 'new_change'
 
 
 def read_INI_database(file_name):
