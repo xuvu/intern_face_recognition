@@ -7,8 +7,10 @@ from tkinter import messagebox
 import configparser
 import mysql.connector
 
+
 def new_function():
     return 'new'
+
 
 def read_INI_database(file_name):
     # Read the existing configuration from file
@@ -75,10 +77,12 @@ def open_window1_face_encoder(person_id_, person_name_, user_):
             unknown_face_encoded = "[" + ','.join(str(val) for val in unknown_face_encoded) + "]"
             # print(unknown_face_encoded)
         except:
-            messagebox.showwarning('เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ', 'เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ กรุณาเลือกภาพอื่นหรือทำการถ่ายภาพใหม่')
+            messagebox.showwarning('เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ',
+                                   'เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ กรุณาเลือกภาพอื่นหรือทำการถ่ายภาพใหม่')
 
         if mydb.is_connected() and unknown_face_encoded is not None:
-            if send_data(id_num_=person_id_, name_=person_name_, user_code_=user_, feature_vector_=str(unknown_face_encoded)):
+            if send_data(id_num_=person_id_, name_=person_name_, user_code_=user_,
+                         feature_vector_=str(unknown_face_encoded)):
                 messagebox.showinfo("การบันทึกสำเร็จ", "ข้อมูลได้รับการบันทึกแล้ว")
                 finish_ = True
             else:
@@ -335,22 +339,25 @@ def open_window2_face_comparison():
                     count_for_feature += 1
 
                 if len(show_label['id']) > 0:
-                    sorted_indices = sorted(range(len(show_label['similarity_score'])),key=lambda k: show_label['similarity_score'][k])
+                    sorted_indices = sorted(range(len(show_label['similarity_score'])),
+                                            key=lambda k: show_label['similarity_score'][k])
                     sorted_data = {key: [show_label[key][i] for i in sorted_indices] for key in show_label}
 
                     # Slice the top 3 results
                     top_3 = {k: v[:1] for k, v in sorted_data.items()}
 
-                    messagebox.showinfo('ค้นพบบุคคลในฐานข้อมูล','ชื่อ: ' + top_3['name'][0] + "  เลขบัตรประชาชน: " + top_3['id'][0])
+                    messagebox.showinfo('ค้นพบบุคคลในฐานข้อมูล',
+                                        'ชื่อ: ' + top_3['name'][0] + "  เลขบัตรประชาชน: " + top_3['id'][0])
                     write_INI_result('face_id.ini', top_3['id'][0], top_3['name'][0])
                     finish_ = True
                 else:
-                    label_person_info = tk.Label(face_frame, text='ไม่พบบุคคลในฐานข้อมูล', name='result0', font=("Arial", 14))
+                    label_person_info = tk.Label(face_frame, text='ไม่พบบุคคลในฐานข้อมูล', name='result0',
+                                                 font=("Arial", 14))
                     label_person_info.pack(side=tk.BOTTOM, pady=10)
 
             except:
                 pass
-                #messagebox.showwarning('เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ','เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ กรุณาถ่ายรูปและเลือกรูปภาพใหม่')
+                # messagebox.showwarning('เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ','เกิดข้อผิดพลาดในการแปลงข้อมูลภาพ กรุณาถ่ายรูปและเลือกรูปภาพใหม่')
         else:
             messagebox.showwarning('ไม่สามารถเชื่อมต่อฐานข้อมูลได้', 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้')
 
