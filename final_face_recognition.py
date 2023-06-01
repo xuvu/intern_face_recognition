@@ -7,6 +7,8 @@ from tkinter import messagebox
 import configparser
 import mysql.connector
 
+def new_function():
+    return 'new'
 
 def read_INI_database(file_name):
     # Read the existing configuration from file
